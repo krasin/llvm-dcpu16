@@ -94,6 +94,9 @@ void DCPU16InstrInfo::copyPhysReg(MachineBasicBlock &MBB,
     Opc = DCPU16::MOV16rr;
   else if (DCPU16::GR8RegClass.contains(DestReg, SrcReg))
     Opc = DCPU16::MOV8rr;
+  else if (DCPU16::GR16RegClass.contains(DestReg) &&
+	   DCPU16::GR8RegClass.contains(SrcReg))
+    Opc = DCPU16::MOV16rr;
   else
     llvm_unreachable("Impossible reg-to-reg copy");
 
