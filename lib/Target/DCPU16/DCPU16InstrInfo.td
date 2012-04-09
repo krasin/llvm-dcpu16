@@ -699,11 +699,7 @@ def BIC16mm : I16mm<0x0,
 }
 
 let isCommutable = 1 in { // X = XOR Y, Z  == X = XOR Z, Y
-def XOR8rr  : I8rr<0x0,
-                   (outs GR8:$dst), (ins GR8:$src, GR8:$src2),
-                   "xor.b\t{$src2, $dst}",
-                   [(set GR8:$dst, (xor GR8:$src, GR8:$src2)),
-                    (implicit SRW)]>;
+
 def XOR16rr : I16rr<0x0,
                     (outs GR16:$dst), (ins GR16:$src, GR16:$src2),
                     "XOR\t{$src2, $dst}",
@@ -711,22 +707,12 @@ def XOR16rr : I16rr<0x0,
                      (implicit SRW)]>;
 }
 
-def XOR8ri  : I8ri<0x0,
-                   (outs GR8:$dst), (ins GR8:$src, i8imm:$src2),
-                   "xor.b\t{$src2, $dst}",
-                   [(set GR8:$dst, (xor GR8:$src, imm:$src2)),
-                    (implicit SRW)]>;
 def XOR16ri : I16ri<0x0,
                     (outs GR16:$dst), (ins GR16:$src, i16imm:$src2),
                     "XOR\t{$src2, $dst}",
                     [(set GR16:$dst, (xor GR16:$src, imm:$src2)),
                      (implicit SRW)]>;
 
-def XOR8rm  : I8rm<0x0,
-                   (outs GR8:$dst), (ins GR8:$src, memsrc:$src2),
-                   "xor.b\t{$src2, $dst}",
-                   [(set GR8:$dst, (xor GR8:$src, (load addr:$src2))),
-                    (implicit SRW)]>;
 def XOR16rm : I16rm<0x0,
                     (outs GR16:$dst), (ins GR16:$src, memsrc:$src2),
                     "XOR\t{$src2, $dst}",
@@ -735,10 +721,7 @@ def XOR16rm : I16rm<0x0,
 
 let mayLoad = 1, hasExtraDefRegAllocReq = 1, 
 Constraints = "$base = $base_wb, $src = $dst" in {
-def XOR8rm_POST : IForm8<0x0, DstReg, SrcPostInc, Size2Bytes,
-                         (outs GR8:$dst, GR16:$base_wb),
-                         (ins GR8:$src, GR16:$base),
-                         "xor.b\t{@$base+, $dst}", []>;
+
 def XOR16rm_POST : IForm16<0x0, DstReg, SrcPostInc, Size2Bytes,
                            (outs GR16:$dst, GR16:$base_wb),
                            (ins GR16:$src, GR16:$base),
@@ -746,33 +729,19 @@ def XOR16rm_POST : IForm16<0x0, DstReg, SrcPostInc, Size2Bytes,
 }
 
 let Constraints = "" in {
-def XOR8mr  : I8mr<0x0,
-                   (outs), (ins memdst:$dst, GR8:$src),
-                   "xor.b\t{$src, $dst}",
-                   [(store (xor (load addr:$dst), GR8:$src), addr:$dst),
-                    (implicit SRW)]>;
+
 def XOR16mr : I16mr<0x0,
                     (outs), (ins memdst:$dst, GR16:$src),
                     "XOR\t{$src, $dst}",
                     [(store (xor (load addr:$dst), GR16:$src), addr:$dst),
                      (implicit SRW)]>;
 
-def XOR8mi  : I8mi<0x0,
-                   (outs), (ins memdst:$dst, i8imm:$src),
-                   "xor.b\t{$src, $dst}",
-                   [(store (xor (load addr:$dst), (i8 imm:$src)), addr:$dst),
-                    (implicit SRW)]>;
 def XOR16mi : I16mi<0x0,
                     (outs), (ins memdst:$dst, i16imm:$src),
                     "XOR\t{$src, $dst}",
                     [(store (xor (load addr:$dst), (i16 imm:$src)), addr:$dst),
                      (implicit SRW)]>;
 
-def XOR8mm  : I8mm<0x0,
-                   (outs), (ins memdst:$dst, memsrc:$src),
-                   "xor.b\t{$src, $dst}",
-                   [(store (xor (load addr:$dst), (i8 (load addr:$src))), addr:$dst),
-                    (implicit SRW)]>;
 def XOR16mm : I16mm<0x0,
                     (outs), (ins memdst:$dst, memsrc:$src),
                     "XOR\t{$src, $dst}",
