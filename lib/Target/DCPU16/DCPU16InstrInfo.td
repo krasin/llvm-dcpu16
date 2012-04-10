@@ -1160,17 +1160,6 @@ def : Pat<(store (addc (load addr:$dst), GR16:$src), addr:$dst),
 def : Pat<(store (addc (load addr:$dst), (i16 (load addr:$src))), addr:$dst),
           (ADD16mm addr:$dst, addr:$src)>;
 
-def : Pat<(addc GR8:$src, GR8:$src2),
-          (ADD8rr GR8:$src, GR8:$src2)>;
-def : Pat<(addc GR8:$src, (load addr:$src2)),
-          (ADD8rm GR8:$src, addr:$src2)>;
-def : Pat<(addc GR8:$src, imm:$src2),
-          (ADD8ri GR8:$src, imm:$src2)>;
-def : Pat<(store (addc (load addr:$dst), GR8:$src), addr:$dst),
-          (ADD8mr addr:$dst, GR8:$src)>;
-def : Pat<(store (addc (load addr:$dst), (i8 (load addr:$src))), addr:$dst),
-          (ADD8mm addr:$dst, addr:$src)>;
-
 def : Pat<(subc GR16:$src, GR16:$src2),
           (SUB16rr GR16:$src, GR16:$src2)>;
 def : Pat<(subc GR16:$src, (load addr:$src2)),
@@ -1181,20 +1170,3 @@ def : Pat<(store (subc (load addr:$dst), GR16:$src), addr:$dst),
           (SUB16mr addr:$dst, GR16:$src)>;
 def : Pat<(store (subc (load addr:$dst), (i16 (load addr:$src))), addr:$dst),
           (SUB16mm addr:$dst, addr:$src)>;
-
-def : Pat<(subc GR8:$src, GR8:$src2),
-          (SUB8rr GR8:$src, GR8:$src2)>;
-def : Pat<(subc GR8:$src, (load addr:$src2)),
-          (SUB8rm GR8:$src, addr:$src2)>;
-def : Pat<(subc GR8:$src, imm:$src2),
-          (SUB8ri GR8:$src, imm:$src2)>;
-def : Pat<(store (subc (load addr:$dst), GR8:$src), addr:$dst),
-          (SUB8mr addr:$dst, GR8:$src)>;
-def : Pat<(store (subc (load addr:$dst), (i8 (load addr:$src))), addr:$dst),
-          (SUB8mm addr:$dst, addr:$src)>;
-
-// peephole patterns
-def : Pat<(and GR16:$src, 255), (ZEXT16r GR16:$src)>;
-def : Pat<(DCPU16cmp (trunc (and_su GR16:$src, GR16:$src2)), 0),
-          (BIT8rr (EXTRACT_SUBREG GR16:$src, subreg_8bit),
-                  (EXTRACT_SUBREG GR16:$src2, subreg_8bit))>;
