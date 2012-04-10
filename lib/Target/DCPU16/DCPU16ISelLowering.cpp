@@ -1071,7 +1071,7 @@ DCPU16TargetLowering::EmitShiftInstr(MachineInstr *MI,
   // BB:
   // cmp 0, N
   // je RemBB
-  BuildMI(BB, dl, TII.get(DCPU16::CMP8ri))
+  BuildMI(BB, dl, TII.get(DCPU16::CMP16ri))
     .addReg(ShiftAmtSrcReg).addImm(0);
   BuildMI(BB, dl, TII.get(DCPU16::JCC))
     .addMBB(RemBB)
