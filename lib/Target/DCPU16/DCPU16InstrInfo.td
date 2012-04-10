@@ -658,39 +658,23 @@ def OR16mm : I16mm<0x0,
 }
 
 // bic does not modify condition codes
-def BIC8rr :  I8rr<0x0,
-                   (outs GR8:$dst), (ins GR8:$src, GR8:$src2),
-                   "bic.b\t{$src2, $dst}",
-                   [(set GR8:$dst, (and GR8:$src, (not GR8:$src2)))]>;
 def BIC16rr : I16rr<0x0,
                     (outs GR16:$dst), (ins GR16:$src, GR16:$src2),
                     "bic.w\t{$src2, $dst}",
                     [(set GR16:$dst, (and GR16:$src, (not GR16:$src2)))]>;
 
-def BIC8rm :  I8rm<0x0,
-                   (outs GR8:$dst), (ins GR8:$src, memsrc:$src2),
-                   "bic.b\t{$src2, $dst}",
-                    [(set GR8:$dst, (and GR8:$src, (not (i8 (load addr:$src2)))))]>;
 def BIC16rm : I16rm<0x0,
                     (outs GR16:$dst), (ins GR16:$src, memsrc:$src2),
                     "bic.w\t{$src2, $dst}",
                     [(set GR16:$dst, (and GR16:$src, (not (i16 (load addr:$src2)))))]>;
 
 let Constraints = "" in {
-def BIC8mr :  I8mr<0x0,
-                   (outs), (ins memdst:$dst, GR8:$src),
-                   "bic.b\t{$src, $dst}",
-                   [(store (and (load addr:$dst), (not GR8:$src)), addr:$dst)]>;
+
 def BIC16mr : I16mr<0x0,
                     (outs), (ins memdst:$dst, GR16:$src),
                     "bic.w\t{$src, $dst}",
                     [(store (and (load addr:$dst), (not GR16:$src)), addr:$dst)]>;
 
-def BIC8mm :  I8mm<0x0,
-                   (outs), (ins memdst:$dst, memsrc:$src),
-                   "bic.b\t{$src, $dst}",
-                   [(store (and (load addr:$dst),
-                                (not (i8 (load addr:$src)))), addr:$dst)]>;
 def BIC16mm : I16mm<0x0,
                     (outs), (ins memdst:$dst, memsrc:$src),
                     "bic.w\t{$src, $dst}",
