@@ -1111,9 +1111,9 @@ DCPU16TargetLowering::EmitInstrWithCustomInserter(MachineInstr *MI,
                                                   MachineBasicBlock *BB) const {
   unsigned Opc = MI->getOpcode();
 
-  if (Opc == DCPU16::Shl8 || Opc == DCPU16::Shl16 ||
-      Opc == DCPU16::Sra8 || Opc == DCPU16::Sra16 ||
-      Opc == DCPU16::Srl8 || Opc == DCPU16::Srl16)
+  if (Opc == DCPU16::Shl16 ||
+      Opc == DCPU16::Sra16 ||
+      Opc == DCPU16::Srl16)
     return EmitShiftInstr(MI, BB);
 
   const TargetInstrInfo &TII = *getTargetMachine().getInstrInfo();
