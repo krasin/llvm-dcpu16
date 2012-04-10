@@ -761,33 +761,18 @@ def SBC16mm : I16mm<0x0,
 } // Uses = [SRW]
 
 // FIXME: memory variant!
-def SAR8r1  : II8r<0x0,
-                   (outs GR8:$dst), (ins GR8:$src),
-                   "rra.b\t$dst",
-                   [(set GR8:$dst, (DCPU16rra GR8:$src)),
-                    (implicit SRW)]>;
 def SAR16r1 : II16r<0x0,
                     (outs GR16:$dst), (ins GR16:$src),
                     "rra.w\t$dst",
                     [(set GR16:$dst, (DCPU16rra GR16:$src)),
                      (implicit SRW)]>;
 
-def SHL8r1  : I8rr<0x0,
-                   (outs GR8:$dst), (ins GR8:$src),
-                   "rla.b\t$dst",
-                   [(set GR8:$dst, (DCPU16rla GR8:$src)),
-                    (implicit SRW)]>;
 def SHL16r1 : I16rr<0x0,
                     (outs GR16:$dst), (ins GR16:$src),
                     "rla.w\t$dst",
                     [(set GR16:$dst, (DCPU16rla GR16:$src)),
                      (implicit SRW)]>;
 
-def SAR8r1c  : Pseudo<(outs GR8:$dst), (ins GR8:$src),
-                      "clrc\n\t"
-                      "rrc.b\t$dst",
-                      [(set GR8:$dst, (DCPU16rrc GR8:$src)),
-                       (implicit SRW)]>;
 def SAR16r1c : Pseudo<(outs GR16:$dst), (ins GR16:$src),
                       "clrc\n\t"
                       "rrc.w\t$dst",

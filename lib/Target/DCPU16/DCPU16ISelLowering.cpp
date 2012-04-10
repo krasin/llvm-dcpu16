@@ -1022,25 +1022,13 @@ DCPU16TargetLowering::EmitShiftInstr(MachineInstr *MI,
   const TargetRegisterClass * RC;
   switch (MI->getOpcode()) {
   default: llvm_unreachable("Invalid shift opcode!");
-  case DCPU16::Shl8:
-   Opc = DCPU16::SHL8r1;
-   RC = DCPU16::GR8RegisterClass;
-   break;
   case DCPU16::Shl16:
    Opc = DCPU16::SHL16r1;
    RC = DCPU16::GR16RegisterClass;
    break;
-  case DCPU16::Sra8:
-   Opc = DCPU16::SAR8r1;
-   RC = DCPU16::GR8RegisterClass;
-   break;
   case DCPU16::Sra16:
    Opc = DCPU16::SAR16r1;
    RC = DCPU16::GR16RegisterClass;
-   break;
-  case DCPU16::Srl8:
-   Opc = DCPU16::SAR8r1c;
-   RC = DCPU16::GR8RegisterClass;
    break;
   case DCPU16::Srl16:
    Opc = DCPU16::SAR16r1c;
