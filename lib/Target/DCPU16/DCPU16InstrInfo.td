@@ -798,33 +798,17 @@ def SUB16mm : I16mm<0x0,
 }
 
 let Uses = [SRW] in {
-def SBC8rr  : I8rr<0x0,
-                   (outs GR8:$dst), (ins GR8:$src, GR8:$src2),
-                   "subc.b\t{$src2, $dst}",
-                   [(set GR8:$dst, (sube GR8:$src, GR8:$src2)),
-                    (implicit SRW)]>;
 def SBC16rr : I16rr<0x0,
                     (outs GR16:$dst), (ins GR16:$src, GR16:$src2),
                     "subc.w\t{$src2, $dst}",
                     [(set GR16:$dst, (sube GR16:$src, GR16:$src2)),
                      (implicit SRW)]>;
 
-def SBC8ri  : I8ri<0x0,
-                   (outs GR8:$dst), (ins GR8:$src, i8imm:$src2),
-                   "subc.b\t{$src2, $dst}",
-                   [(set GR8:$dst, (sube GR8:$src, imm:$src2)),
-                    (implicit SRW)]>;
 def SBC16ri : I16ri<0x0,
                     (outs GR16:$dst), (ins GR16:$src, i16imm:$src2),
                     "subc.w\t{$src2, $dst}",
                     [(set GR16:$dst, (sube GR16:$src, imm:$src2)),
                      (implicit SRW)]>;
-
-def SBC8rm  : I8rm<0x0,
-                   (outs GR8:$dst), (ins GR8:$src, memsrc:$src2),
-                   "subc.b\t{$src2, $dst}",
-                   [(set GR8:$dst, (sube GR8:$src, (load addr:$src2))),
-                    (implicit SRW)]>;
 def SBC16rm : I16rm<0x0,
                     (outs GR16:$dst), (ins GR16:$src, memsrc:$src2),
                     "subc.w\t{$src2, $dst}",
@@ -832,34 +816,18 @@ def SBC16rm : I16rm<0x0,
                      (implicit SRW)]>;
 
 let Constraints = "" in {
-def SBC8mr  : I8mr<0x0,
-                   (outs), (ins memdst:$dst, GR8:$src),
-                   "subc.b\t{$src, $dst}",
-                  [(store (sube (load addr:$dst), GR8:$src), addr:$dst),
-                   (implicit SRW)]>;
 def SBC16mr : I16mr<0x0,
                     (outs), (ins memdst:$dst, GR16:$src),
                     "subc.w\t{$src, $dst}",
                     [(store (sube (load addr:$dst), GR16:$src), addr:$dst),
                      (implicit SRW)]>;
 
-def SBC8mi  : I8mi<0x0,
-                   (outs), (ins memdst:$dst, i8imm:$src),
-                   "subc.b\t{$src, $dst}",
-                   [(store (sube (load addr:$dst), (i8 imm:$src)), addr:$dst),
-                    (implicit SRW)]>;
 def SBC16mi : I16mi<0x0,
                     (outs), (ins memdst:$dst, i16imm:$src),
                     "subc.w\t{$src, $dst}",
                     [(store (sube (load addr:$dst), (i16 imm:$src)), addr:$dst),
                      (implicit SRW)]>;
 
-def SBC8mm  : I8mm<0x0,
-                   (outs), (ins memdst:$dst, memsrc:$src),
-                   "subc.b\t{$src, $dst}",
-                   [(store (sube (load addr:$dst),
-                                 (i8 (load addr:$src))), addr:$dst),
-                    (implicit SRW)]>;
 def SBC16mm : I16mm<0x0,
                     (outs), (ins memdst:$dst, memsrc:$src),
                     "subc.w\t{$src, $dst}",
