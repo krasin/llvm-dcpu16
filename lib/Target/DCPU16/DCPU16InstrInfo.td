@@ -750,33 +750,18 @@ def XOR16mm : I16mm<0x0,
 }
 
 
-def SUB8rr  : I8rr<0x0,
-                   (outs GR8:$dst), (ins GR8:$src, GR8:$src2),
-                   "sub.b\t{$src2, $dst}",
-                   [(set GR8:$dst, (sub GR8:$src, GR8:$src2)),
-                    (implicit SRW)]>;
 def SUB16rr : I16rr<0x0,
                     (outs GR16:$dst), (ins GR16:$src, GR16:$src2),
                     "SUB\t{$dst, $src2} ; The Notch order",
                     [(set GR16:$dst, (sub GR16:$src, GR16:$src2)),
                      (implicit SRW)]>;
 
-def SUB8ri  : I8ri<0x0,
-                   (outs GR8:$dst), (ins GR8:$src, i8imm:$src2),
-                   "sub.b\t{$src2, $dst}",
-                   [(set GR8:$dst, (sub GR8:$src, imm:$src2)),
-                    (implicit SRW)]>;
 def SUB16ri : I16ri<0x0,
                     (outs GR16:$dst), (ins GR16:$src, i16imm:$src2),
                     "SUB\t{$dst, $src2} ; The Notch order",
                     [(set GR16:$dst, (sub GR16:$src, imm:$src2)),
                      (implicit SRW)]>;
 
-def SUB8rm  : I8rm<0x0,
-                   (outs GR8:$dst), (ins GR8:$src, memsrc:$src2),
-                   "sub.b\t{$src2, $dst}",
-                   [(set GR8:$dst, (sub GR8:$src, (load addr:$src2))),
-                    (implicit SRW)]>;
 def SUB16rm : I16rm<0x0,
                     (outs GR16:$dst), (ins GR16:$src, memsrc:$src2),
                     "SUB\t{$dst, $src2} ; The Notch order",
@@ -785,10 +770,6 @@ def SUB16rm : I16rm<0x0,
 
 let mayLoad = 1, hasExtraDefRegAllocReq = 1, 
 Constraints = "$base = $base_wb, $src = $dst" in {
-def SUB8rm_POST : IForm8<0x0, DstReg, SrcPostInc, Size2Bytes,
-                         (outs GR8:$dst, GR16:$base_wb),
-                         (ins GR8:$src, GR16:$base),
-                         "sub.b\t{@$base+, $dst}", []>;
 def SUB16rm_POST : IForm16<0x0, DstReg, SrcPostInc, Size2Bytes,
                           (outs GR16:$dst, GR16:$base_wb),
                           (ins GR16:$src, GR16:$base),
@@ -796,34 +777,18 @@ def SUB16rm_POST : IForm16<0x0, DstReg, SrcPostInc, Size2Bytes,
 }
 
 let Constraints = "" in {
-def SUB8mr  : I8mr<0x0,
-                   (outs), (ins memdst:$dst, GR8:$src),
-                   "sub.b\t{$src, $dst}",
-                   [(store (sub (load addr:$dst), GR8:$src), addr:$dst),
-                    (implicit SRW)]>;
 def SUB16mr : I16mr<0x0,
                     (outs), (ins memdst:$dst, GR16:$src),
                     "SUB\t{$dst, $src} ; The Notch order",
                     [(store (sub (load addr:$dst), GR16:$src), addr:$dst),
                      (implicit SRW)]>;
 
-def SUB8mi  : I8mi<0x0,
-                   (outs), (ins memdst:$dst, i8imm:$src),
-                   "sub.b\t{$src, $dst}",
-                   [(store (sub (load addr:$dst), (i8 imm:$src)), addr:$dst),
-                    (implicit SRW)]>;
 def SUB16mi : I16mi<0x0,
                     (outs), (ins memdst:$dst, i16imm:$src),
                     "SUB\t{$dst, $src} ; The Notch order",
                     [(store (sub (load addr:$dst), (i16 imm:$src)), addr:$dst),
                      (implicit SRW)]>;
 
-def SUB8mm  : I8mm<0x0,
-                   (outs), (ins memdst:$dst, memsrc:$src),
-                   "sub.b\t{$src, $dst}",
-                   [(store (sub (load addr:$dst), 
-                                (i8 (load addr:$src))), addr:$dst),
-                    (implicit SRW)]>;
 def SUB16mm : I16mm<0x0,
                     (outs), (ins memdst:$dst, memsrc:$src),
                     "SUB\t{$dst, $src} ; The Notch order",

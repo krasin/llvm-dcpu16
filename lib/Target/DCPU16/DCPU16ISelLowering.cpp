@@ -1102,7 +1102,7 @@ DCPU16TargetLowering::EmitShiftInstr(MachineInstr *MI,
     .addReg(ShiftAmtReg2).addMBB(LoopBB);
   BuildMI(LoopBB, dl, TII.get(Opc), ShiftReg2)
     .addReg(ShiftReg);
-  BuildMI(LoopBB, dl, TII.get(DCPU16::SUB8ri), ShiftAmtReg2)
+  BuildMI(LoopBB, dl, TII.get(DCPU16::SUB16ri), ShiftAmtReg2)
     .addReg(ShiftAmtReg).addImm(1);
   BuildMI(LoopBB, dl, TII.get(DCPU16::JCC))
     .addMBB(LoopBB)
