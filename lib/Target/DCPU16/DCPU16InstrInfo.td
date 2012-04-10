@@ -131,21 +131,12 @@ let usesCustomInserter = 1 in {
                         [(set GR16:$dst,
                           (DCPU16selectcc GR16:$src, GR16:$src2, imm:$cc))]>;
   let Defs = [SRW] in {
-  def Shl8     : Pseudo<(outs GR8:$dst), (ins GR8:$src, GR8:$cnt),
-                        "# Shl8 PSEUDO",
-                        [(set GR8:$dst, (DCPU16shl GR8:$src, GR8:$cnt))]>;
   def Shl16    : Pseudo<(outs GR16:$dst), (ins GR16:$src, GR8:$cnt),
                         "# Shl16 PSEUDO",
                         [(set GR16:$dst, (DCPU16shl GR16:$src, GR8:$cnt))]>;
-  def Sra8     : Pseudo<(outs GR8:$dst), (ins GR8:$src, GR8:$cnt),
-                        "# Sra8 PSEUDO",
-                        [(set GR8:$dst, (DCPU16sra GR8:$src, GR8:$cnt))]>;
   def Sra16    : Pseudo<(outs GR16:$dst), (ins GR16:$src, GR8:$cnt),
                         "# Sra16 PSEUDO",
                         [(set GR16:$dst, (DCPU16sra GR16:$src, GR8:$cnt))]>;
-  def Srl8     : Pseudo<(outs GR8:$dst), (ins GR8:$src, GR8:$cnt),
-                        "# Srl8 PSEUDO",
-                        [(set GR8:$dst, (DCPU16srl GR8:$src, GR8:$cnt))]>;
   def Srl16    : Pseudo<(outs GR16:$dst), (ins GR16:$src, GR8:$cnt),
                         "# Srl16 PSEUDO",
                         [(set GR16:$dst, (DCPU16srl GR16:$src, GR8:$cnt))]>;
