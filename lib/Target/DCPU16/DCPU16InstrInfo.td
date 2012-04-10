@@ -383,11 +383,6 @@ def ADD16mm : I16mm<0x0,
 let Uses = [SRW] in {
 
 let isCommutable = 1 in { // X = ADDC Y, Z  == X = ADDC Z, Y
-def ADC8rr  : I8rr<0x0,
-                   (outs GR8:$dst), (ins GR8:$src, GR8:$src2),
-                   "addc.b\t{$src2, $dst}",
-                   [(set GR8:$dst, (adde GR8:$src, GR8:$src2)),
-                    (implicit SRW)]>;
 def ADC16rr : I16rr<0x0,
                     (outs GR16:$dst), (ins GR16:$src, GR16:$src2),
                     "addc.w\t{$src2, $dst}",
@@ -395,22 +390,12 @@ def ADC16rr : I16rr<0x0,
                      (implicit SRW)]>;
 } // isCommutable
 
-def ADC8ri  : I8ri<0x0,
-                   (outs GR8:$dst), (ins GR8:$src, i8imm:$src2),
-                   "addc.b\t{$src2, $dst}",
-                   [(set GR8:$dst, (adde GR8:$src, imm:$src2)),
-                    (implicit SRW)]>;
 def ADC16ri : I16ri<0x0,
                     (outs GR16:$dst), (ins GR16:$src, i16imm:$src2),
                     "addc.w\t{$src2, $dst}",
                     [(set GR16:$dst, (adde GR16:$src, imm:$src2)),
                      (implicit SRW)]>;
 
-def ADC8rm  : I8rm<0x0,
-                   (outs GR8:$dst), (ins GR8:$src, memsrc:$src2),
-                   "addc.b\t{$src2, $dst}",
-                   [(set GR8:$dst, (adde GR8:$src, (load addr:$src2))),
-                    (implicit SRW)]>;
 def ADC16rm : I16rm<0x0,
                     (outs GR16:$dst), (ins GR16:$src, memsrc:$src2),
                     "addc.w\t{$src2, $dst}",
@@ -418,34 +403,18 @@ def ADC16rm : I16rm<0x0,
                      (implicit SRW)]>;
 
 let Constraints = "" in {
-def ADC8mr  : I8mr<0x0,
-                   (outs), (ins memdst:$dst, GR8:$src),
-                   "addc.b\t{$src, $dst}",
-                   [(store (adde (load addr:$dst), GR8:$src), addr:$dst),
-                    (implicit SRW)]>;
 def ADC16mr : I16mr<0x0,
                     (outs), (ins memdst:$dst, GR16:$src),
                     "addc.w\t{$src, $dst}",
                     [(store (adde (load addr:$dst), GR16:$src), addr:$dst),
                      (implicit SRW)]>;
 
-def ADC8mi  : I8mi<0x0,
-                   (outs), (ins memdst:$dst, i8imm:$src),
-                   "addc.b\t{$src, $dst}",
-                   [(store (adde (load addr:$dst), (i8 imm:$src)), addr:$dst),
-                    (implicit SRW)]>;
 def ADC16mi : I16mi<0x0,
                     (outs), (ins memdst:$dst, i16imm:$src),
                     "addc.w\t{$src, $dst}",
                     [(store (adde (load addr:$dst), (i16 imm:$src)), addr:$dst),
                      (implicit SRW)]>;
 
-def ADC8mm  : I8mm<0x0,
-                   (outs), (ins memdst:$dst, memsrc:$src),
-                   "addc.b\t{$src, $dst}",
-                   [(store (adde (load addr:$dst), 
-                                 (i8 (load addr:$src))), addr:$dst),
-                    (implicit SRW)]>;
 def ADC16mm : I8mm<0x0,
                    (outs), (ins memdst:$dst, memsrc:$src),
                    "addc.w\t{$src, $dst}",
