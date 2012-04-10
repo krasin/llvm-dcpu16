@@ -586,29 +586,18 @@ def AND16mm : I16mm<0x0,
 }
 
 let isCommutable = 1 in { // X = OR Y, Z  == X = OR Z, Y
-def OR8rr  : I8rr<0x0,
-                  (outs GR8:$dst), (ins GR8:$src, GR8:$src2),
-                  "bis.b\t{$src2, $dst}",
-                  [(set GR8:$dst, (or GR8:$src, GR8:$src2))]>;
+
 def OR16rr : I16rr<0x0,
                    (outs GR16:$dst), (ins GR16:$src, GR16:$src2),
                    "BOR\t{$src2, $dst}",
                    [(set GR16:$dst, (or GR16:$src, GR16:$src2))]>;
 }
 
-def OR8ri  : I8ri<0x0,
-                  (outs GR8:$dst), (ins GR8:$src, i8imm:$src2),
-                  "bis.b\t{$src2, $dst}",
-                  [(set GR8:$dst, (or GR8:$src, imm:$src2))]>;
 def OR16ri : I16ri<0x0,
                    (outs GR16:$dst), (ins GR16:$src, i16imm:$src2),
                    "BOR\t{$src2, $dst}",
                    [(set GR16:$dst, (or GR16:$src, imm:$src2))]>;
 
-def OR8rm  : I8rm<0x0,
-                  (outs GR8:$dst), (ins GR8:$src, memsrc:$src2),
-                  "bis.b\t{$src2, $dst}",
-                  [(set GR8:$dst, (or GR8:$src, (load addr:$src2)))]>;
 def OR16rm : I16rm<0x0,
                    (outs GR16:$dst), (ins GR16:$src, memsrc:$src2),
                    "BOR\t{$src2, $dst}",
@@ -616,10 +605,6 @@ def OR16rm : I16rm<0x0,
 
 let mayLoad = 1, hasExtraDefRegAllocReq = 1, 
 Constraints = "$base = $base_wb, $src = $dst" in {
-def OR8rm_POST : IForm8<0x0, DstReg, SrcPostInc, Size2Bytes,
-                        (outs GR8:$dst, GR16:$base_wb),
-                        (ins GR8:$src, GR16:$base),
-                        "bis.b\t{@$base+, $dst}", []>;
 def OR16rm_POST : IForm16<0x0, DstReg, SrcPostInc, Size2Bytes,
                           (outs GR16:$dst, GR16:$base_wb),
                           (ins GR16:$src, GR16:$base),
@@ -627,29 +612,16 @@ def OR16rm_POST : IForm16<0x0, DstReg, SrcPostInc, Size2Bytes,
 }
 
 let Constraints = "" in {
-def OR8mr  : I8mr<0x0,
-                  (outs), (ins memdst:$dst, GR8:$src),
-                  "bis.b\t{$src, $dst}",
-                  [(store (or (load addr:$dst), GR8:$src), addr:$dst)]>;
 def OR16mr : I16mr<0x0,
                    (outs), (ins memdst:$dst, GR16:$src),
                    "BOR\t{$src, $dst}",
                    [(store (or (load addr:$dst), GR16:$src), addr:$dst)]>;
 
-def OR8mi  : I8mi<0x0, 
-                  (outs), (ins memdst:$dst, i8imm:$src),
-                  "bis.b\t{$src, $dst}",
-                  [(store (or (load addr:$dst), (i8 imm:$src)), addr:$dst)]>;
 def OR16mi : I16mi<0x0,
                    (outs), (ins memdst:$dst, i16imm:$src),
                    "BOR\t{$src, $dst}",
                    [(store (or (load addr:$dst), (i16 imm:$src)), addr:$dst)]>;
 
-def OR8mm  : I8mm<0x0,
-                  (outs), (ins memdst:$dst, memsrc:$src),
-                  "bis.b\t{$src, $dst}",
-                  [(store (or (i8 (load addr:$dst)),
-                              (i8 (load addr:$src))), addr:$dst)]>;
 def OR16mm : I16mm<0x0,
                    (outs), (ins memdst:$dst, memsrc:$src),
                    "BOR\t{$src, $dst}",
