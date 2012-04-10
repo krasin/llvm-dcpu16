@@ -122,10 +122,6 @@ def ADJCALLSTACKUP   : Pseudo<(outs), (ins i16imm:$amt1, i16imm:$amt2),
 }
 
 let usesCustomInserter = 1 in {
-  def Select8  : Pseudo<(outs GR8:$dst), (ins GR8:$src, GR8:$src2, i8imm:$cc),
-                        "# Select8 PSEUDO",
-                        [(set GR8:$dst,
-                          (DCPU16selectcc GR8:$src, GR8:$src2, imm:$cc))]>;
   def Select16 : Pseudo<(outs GR16:$dst), (ins GR16:$src, GR16:$src2, i8imm:$cc),
                         "# Select16 PSEUDO",
                         [(set GR16:$dst,

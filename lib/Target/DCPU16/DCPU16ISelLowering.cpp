@@ -1119,7 +1119,7 @@ DCPU16TargetLowering::EmitInstrWithCustomInserter(MachineInstr *MI,
   const TargetInstrInfo &TII = *getTargetMachine().getInstrInfo();
   DebugLoc dl = MI->getDebugLoc();
 
-  assert((Opc == DCPU16::Select16 || Opc == DCPU16::Select8) &&
+  assert((Opc == DCPU16::Select16) &&
          "Unexpected instr type to insert");
 
   // To "insert" a SELECT instruction, we actually have to insert the diamond
