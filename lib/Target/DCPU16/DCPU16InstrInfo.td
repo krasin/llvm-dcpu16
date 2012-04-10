@@ -855,68 +855,37 @@ def CMP16mr : I16mr<0x0,
 // BIT TESTS, just sets condition codes
 // Note that the C condition is set differently than when using CMP.
 let isCommutable = 1 in {
-def BIT8rr  : I8rr<0x0,
-                   (outs), (ins GR8:$src, GR8:$src2),
-                   "bit.b\t{$src2, $src}",
-                   [(DCPU16cmp (and_su GR8:$src, GR8:$src2), 0),
-                    (implicit SRW)]>;
 def BIT16rr : I16rr<0x0,
                     (outs), (ins GR16:$src, GR16:$src2),
                     "bit.w\t{$src2, $src}",
                     [(DCPU16cmp (and_su GR16:$src, GR16:$src2), 0),
                      (implicit SRW)]>;
 }
-def BIT8ri  : I8ri<0x0,
-                   (outs), (ins GR8:$src, i8imm:$src2),
-                   "bit.b\t{$src2, $src}",
-                   [(DCPU16cmp (and_su GR8:$src, imm:$src2), 0),
-                    (implicit SRW)]>;
+
 def BIT16ri : I16ri<0x0,
                     (outs), (ins GR16:$src, i16imm:$src2),
                     "bit.w\t{$src2, $src}",
                     [(DCPU16cmp (and_su GR16:$src, imm:$src2), 0),
                      (implicit SRW)]>;
 
-def BIT8rm  : I8rm<0x0,
-                   (outs), (ins GR8:$src, memdst:$src2),
-                   "bit.b\t{$src2, $src}",
-                   [(DCPU16cmp (and_su GR8:$src,  (load addr:$src2)), 0),
-                    (implicit SRW)]>;
 def BIT16rm : I16rm<0x0,
                     (outs), (ins GR16:$src, memdst:$src2),
                     "bit.w\t{$src2, $src}",
                     [(DCPU16cmp (and_su GR16:$src,  (load addr:$src2)), 0),
                      (implicit SRW)]>;
 
-def BIT8mr  : I8mr<0x0,
-                  (outs), (ins memsrc:$src, GR8:$src2),
-                  "bit.b\t{$src2, $src}",
-                  [(DCPU16cmp (and_su (load addr:$src), GR8:$src2), 0),
-                   (implicit SRW)]>;
 def BIT16mr : I16mr<0x0,
                     (outs), (ins memsrc:$src, GR16:$src2),
                     "bit.w\t{$src2, $src}",
                     [(DCPU16cmp (and_su (load addr:$src), GR16:$src2), 0),
                      (implicit SRW)]>;
 
-def BIT8mi  : I8mi<0x0,
-                   (outs), (ins memsrc:$src, i8imm:$src2),
-                   "bit.b\t{$src2, $src}",
-                   [(DCPU16cmp (and_su (load addr:$src), (i8 imm:$src2)), 0),
-                    (implicit SRW)]>;
 def BIT16mi : I16mi<0x0,
                     (outs), (ins memsrc:$src, i16imm:$src2),
                     "bit.w\t{$src2, $src}",
                     [(DCPU16cmp (and_su (load addr:$src), (i16 imm:$src2)), 0),
                      (implicit SRW)]>;
 
-def BIT8mm  : I8mm<0x0,
-                   (outs), (ins memsrc:$src, memsrc:$src2),
-                   "bit.b\t{$src2, $src}",
-                   [(DCPU16cmp (and_su (i8 (load addr:$src)),
-                                       (load addr:$src2)),
-                                 0),
-                      (implicit SRW)]>;
 def BIT16mm : I16mm<0x0,
                     (outs), (ins memsrc:$src, memsrc:$src2),
                     "bit.w\t{$src2, $src}",
