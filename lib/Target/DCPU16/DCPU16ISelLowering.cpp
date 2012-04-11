@@ -92,7 +92,7 @@ DCPU16TargetLowering::DCPU16TargetLowering(DCPU16TargetMachine &tm) :
   setOperationAction(ISD::BR_CC,            MVT::i16,   Custom);
   setOperationAction(ISD::BRCOND,           MVT::Other, Expand);
   setOperationAction(ISD::SETCC,            MVT::i8,    Expand);
-  setOperationAction(ISD::SETCC,            MVT::i16,   Custom);
+  //  setOperationAction(ISD::SETCC,            MVT::i16,   Custom);
   setOperationAction(ISD::SELECT,           MVT::i8,    Expand);
   setOperationAction(ISD::SELECT,           MVT::i16,   Expand);
   setOperationAction(ISD::SELECT_CC,        MVT::i8,    Expand);

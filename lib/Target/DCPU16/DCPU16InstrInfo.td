@@ -711,10 +711,99 @@ def CMP16mr : I16mr<0x0,
                     [(DCPU16cmp (load addr:$src), GR16:$src2), 
                      (implicit RO)]>;
 
+// SETCC
+
+let isCommutable = 1 in {
+
+def SETCCEQ16rrr : I16rr<0x0,
+                    (outs GR16:$dst), (ins GR16:$src, GR16:$src2),
+		    "SET\t{$dst, 0} ; The Notch order\n\t"
+		    "IFE\t{$src, $src2} ; The Notch order\n\t"
+		    "SET\t{$dst, 1} ; The Notch order\n\t",
+                    [(set GR16:$dst, (setcc GR16:$src, GR16:$src2, SETEQ))]>;
+
+def SETCCNE16rrr : I16rr<0x0,
+                    (outs GR16:$dst), (ins GR16:$src, GR16:$src2),
+		    "SET\t{$dst, 1} ; The Notch order\n\t"
+		    "IFE\t{$src, $src2} ; The Notch order\n\t"
+		    "SET\t{$dst, 0} ; The Notch order\n\t",
+                    [(set GR16:$dst, (setcc GR16:$src, GR16:$src2, SETNE))]>;
+} // isCommutable
+
+def SETCCEQ16rri : I16rr<0x0,
+                    (outs GR16:$dst), (ins GR16:$src, i16imm:$src2),
+		    "SET\t{$dst, 0} ; The Notch order\n\t"
+		    "IFE\t{$src, $src2} ; The Notch order\n\t"
+		    "SET\t{$dst, 1} ; The Notch order\n\t",
+                    [(set GR16:$dst, (setcc GR16:$src, (i16 imm:$src2), SETEQ))]>;
+
+def SETCCNE16rri : I16rr<0x0,
+                    (outs GR16:$dst), (ins GR16:$src, i16imm:$src2),
+		    "SET\t{$dst, 1} ; The Notch order\n\t"
+		    "IFE\t{$src, $src2} ; The Notch order\n\t"
+		    "SET\t{$dst, 0} ; The Notch order\n\t",
+                    [(set GR16:$dst, (setcc GR16:$src, (i16 imm:$src2), SETNE))]>;
+
+def SETCCGT16rrr : I16rr<0x0,
+                    (outs GR16:$dst), (ins GR16:$src, GR16:$src2),
+		    "SET\t{$dst, 0} ; The Notch order\n\t"
+		    "IFG\t{$src, $src2} ; The Notch order\n\t"
+		    "SET\t{$dst, 1} ; The Notch order\n\t",
+                    [(set GR16:$dst, (setcc GR16:$src, GR16:$src2, SETGT))]>;
+
+def SETCCUGT16rrr : I16rr<0x0,
+                    (outs GR16:$dst), (ins GR16:$src, GR16:$src2),
+		    "SET\t{$dst, 0} ; The Notch order\n\t"
+		    "IFG\t{$src, $src2} ; The Notch order\n\t"
+		    "SET\t{$dst, 1} ; The Notch order\n\t",
+                    [(set GR16:$dst, (setcc GR16:$src, GR16:$src2, SETUGT))]>;
+
+def SETCCGE16rrr : I16rr<0x0,
+                    (outs GR16:$dst), (ins GR16:$src, GR16:$src2),
+		    "SET\t{$dst, 1} ; The Notch order\n\t"
+		    "IFG\t{$src2, $src} ; The Notch order\n\t"
+		    "SET\t{$dst, 0} ; The Notch order\n\t",
+                    [(set GR16:$dst, (setcc GR16:$src, GR16:$src2, SETGE))]>;
+
+def SETCCUGE16rrr : I16rr<0x0,
+                    (outs GR16:$dst), (ins GR16:$src, GR16:$src2),
+		    "SET\t{$dst, 1} ; The Notch order\n\t"
+		    "IFG\t{$src2, $src} ; The Notch order\n\t"
+		    "SET\t{$dst, 0} ; The Notch order\n\t",
+                    [(set GR16:$dst, (setcc GR16:$src, GR16:$src2, SETUGE))]>;
+
+def SETCCLT16rrr : I16rr<0x0,
+                    (outs GR16:$dst), (ins GR16:$src, GR16:$src2),
+		    "SET\t{$dst, 0} ; The Notch order\n\t"
+		    "IFG\t{$src2, $src} ; The Notch order\n\t"
+		    "SET\t{$dst, 1} ; The Notch order\n\t",
+                    [(set GR16:$dst, (setcc GR16:$src, GR16:$src2, SETLT))]>;
+
+def SETCCULT16rrr : I16rr<0x0,
+                    (outs GR16:$dst), (ins GR16:$src, GR16:$src2),
+		    "SET\t{$dst, 0} ; The Notch order\n\t"
+		    "IFG\t{$src2, $src} ; The Notch order\n\t"
+		    "SET\t{$dst, 1} ; The Notch order\n\t",
+                    [(set GR16:$dst, (setcc GR16:$src, GR16:$src2, SETULT))]>;
+
+def SETCCLE16rrr : I16rr<0x0,
+                    (outs GR16:$dst), (ins GR16:$src, GR16:$src2),
+		    "SET\t{$dst, 1} ; The Notch order\n\t"
+		    "IFG\t{$src, $src2} ; The Notch order\n\t"
+		    "SET\t{$dst, 0} ; The Notch order\n\t",
+                    [(set GR16:$dst, (setcc GR16:$src, GR16:$src2, SETLE))]>;
+
+def SETCCULE16rrr : I16rr<0x0,
+                    (outs GR16:$dst), (ins GR16:$src, GR16:$src2),
+		    "SET\t{$dst, 1} ; The Notch order\n\t"
+		    "IFG\t{$src, $src2} ; The Notch order\n\t"
+		    "SET\t{$dst, 0} ; The Notch order\n\t",
+                    [(set GR16:$dst, (setcc GR16:$src, GR16:$src2, SETULE))]>;
 
 // BIT TESTS, just sets condition codes
 // Note that the C condition is set differently than when using CMP.
 let isCommutable = 1 in {
+
 def BIT16rr : I16rr<0x0,
                     (outs), (ins GR16:$src, GR16:$src2),
                     "IFN\t{$src, $src2} ; The Notch order\n"
